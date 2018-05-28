@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BrickList</string>
+    <string name="project_name">_NAZWA_PROJEKTU</string>
+    <string name="new_project">Nowy projekt</string>
+    <string name="name">nazwa</string>
+    <string name="url">url</string>
+    <string name="add">Dodaj</string>
 </resources>
