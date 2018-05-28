@@ -5,4 +5,9 @@
     <string name="name">nazwa</string>
     <string name="url">url</string>
     <string name="add">Dodaj</string>
+    <string name="countDown">-</string>
+    <string name="startCount">0</string>
+    <string name="countSeparator">/</string>
+    <string name="countUp">+</string>
+    <string name="brick_image">brick image</string>
 </resources>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BrickList.iml" filepath="$PROJECT_DIR$/BrickList.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ubi-BrickList.iml" filepath="$PROJECT_DIR$/Ubi-BrickList.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

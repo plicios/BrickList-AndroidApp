@@ -4,11 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
-
-
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     
@@ -18,26 +15,31 @@ class MainActivity : AppCompatActivity() {
 
         when (requestCode) {
             Globals.NEW_PROJECT_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
-                val newProject = ProjectActivity.project
+                val newProject = NewProjectActivity.project
+                if(newProject != null) {
+                    projectAdapter?.addNewProject(newProject)
+                }
             }
             Globals.EDIT_PROJECT_REQUEST_CODE -> {
             }
         }
-    }//onActivityResult
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val projectsList = ArrayList<Project>()
-        projectsList.add(Project(0, "pierwszy projekt"))
-        projectsList.add(Project(0, "drugi projekt"))
-        projectAdapter = ProjectAdapter(this, projectsList)
+        projectsList.add(Project(0, "pierwszy projekt", ArrayList()))
+        projectsList.add(Project(0, "drugi projekt", ArrayList()))
+        projectAdapter = ProjectAdapter(this)
 
-        //projectList.adapter = projectAdapter
+        projectList.adapter = projectAdapter
 
-        val intent = Intent(this, ProjectActivity::class.java)
+        val intent = Intent(this, NewProjectActivity::class.java)
 
-        newProject!!.setOnClickListener { startActivityForResult(intent, Globals.NEW_PROJECT_REQUEST_CODE) }
+        newProject.setOnClickListener {
+            startActivityForResult(intent, Globals.NEW_PROJECT_REQUEST_CODE)
+        }
     }
 }

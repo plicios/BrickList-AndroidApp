@@ -6,6 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
+    <ListView
+        android:id="@+id/projectList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageView
         android:id="@+id/newProject"
         android:layout_width="wrap_content"
@@ -18,9 +23,4 @@
         android:clickable="true"
         app:srcCompat="@mipmap/ic_launcher_round"
         android:focusable="true" />
-
-    <ListView
-        android:id="@+id/projectsList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </RelativeLayout>
