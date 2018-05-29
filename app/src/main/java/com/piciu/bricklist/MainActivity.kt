@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     
@@ -29,9 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val projectsList = ArrayList<Project>()
-        projectsList.add(Project(0, "pierwszy projekt", ArrayList()))
-        projectsList.add(Project(0, "drugi projekt", ArrayList()))
         projectAdapter = ProjectAdapter(this)
 
         projectList.adapter = projectAdapter

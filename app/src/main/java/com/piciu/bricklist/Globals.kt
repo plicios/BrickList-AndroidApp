@@ -1,8 +1,14 @@
 package com.piciu.bricklist
 
+import android.os.Environment
+
 object Globals {
-    val NEW_PROJECT_REQUEST_CODE = 100
-    val EDIT_PROJECT_REQUEST_CODE = 101
-    val PREFS_FILENAME = "com.piciu"
-    val PROJECTS_LIST = "projectsList"
+    const val NEW_PROJECT_REQUEST_CODE = 100
+    const val EDIT_PROJECT_REQUEST_CODE = 101
+    const val WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 102
+    const val PREFS_FILENAME = "com.piciu"
+    const val PROJECTS_LIST = "projectsList"
+
+    val XMLPath = Environment.getExternalStorageDirectory().absolutePath + "/" + "BrickList"
+
 }

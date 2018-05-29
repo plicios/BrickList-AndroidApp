@@ -10,4 +10,5 @@
     <string name="countSeparator">/</string>
     <string name="countUp">+</string>
     <string name="brick_image">brick image</string>
+    <string name="generate_xml">Generuj XML</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.piciu.bricklist
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
@@ -9,43 +10,24 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.squareup.moshi.KotlinJsonAdapterFactory
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 
 
-class ProjectAdapter : BaseAdapter {
+class ProjectAdapter(private val context: Context) : BaseAdapter() {
 
-    private val context: Context
-    private val projectList: ArrayList<Project>
-    private var prefs: SharedPreferences? = null
-    private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-    private val listMyData = Types.newParameterizedType(ArrayList::class.java, Project::class.java)
-    private val issueAdapter = moshi.adapter<ArrayList<Project>>(listMyData)
-
-
-    constructor(context: Context) : super() {
-        this.context = context
-
-        prefs = context.getSharedPreferences(Globals.PREFS_FILENAME, 0)
-        val projectListJson: String = prefs!!.getString(Globals.PROJECTS_LIST,"[]")
-
-        val newProjectList: ArrayList<Project>? = issueAdapter.fromJson(projectListJson)
-        if(newProjectList != null) {
-            this.projectList = newProjectList
-        }
-        else{
-            this.projectList = ArrayList()
-        }
-    }
+    private var prefs: SharedPreferences = context.getSharedPreferences(Globals.PREFS_FILENAME, 0)
+    private val projectListJson: String = prefs.getString(Globals.PROJECTS_LIST,"[]")
+    private val mapper = jacksonObjectMapper()
+    val projectList: ArrayList<Project> = mapper.readValue(projectListJson)
 
     fun addNewProject(project: Project) {
         this.projectList.add(project)
         notifyDataSetChanged()
 
-        val projectsListJson: String = issueAdapter.toJson(projectList)
+        val projectsListJson = mapper.writeValueAsString(projectList)
 
-        val editor = prefs!!.edit()
+        val editor = prefs.edit()
         editor.putString(Globals.PROJECTS_LIST, projectsListJson)
         editor.apply()
     }
@@ -81,9 +63,9 @@ class ProjectAdapter : BaseAdapter {
             projectList.remove(project)
             notifyDataSetChanged()
 
-            val projectsListJson: String = issueAdapter.toJson(projectList)
+            val projectsListJson = mapper.writeValueAsString(projectList)
 
-            val editor = prefs!!.edit()
+            val editor = prefs.edit()
             editor.putString(Globals.PROJECTS_LIST, projectsListJson)
             editor.apply()
         }
@@ -91,15 +73,17 @@ class ProjectAdapter : BaseAdapter {
         archiveProject.setOnClickListener {
             Toast.makeText(context, "Project archived", Toast.LENGTH_LONG).show()
 
-            val projectsListJson: String = issueAdapter.toJson(projectList)
+            val projectsListJson = mapper.writeValueAsString(projectList)
 
-            val editor = prefs!!.edit()
+            val editor = prefs.edit()
             editor.putString(Globals.PROJECTS_LIST, projectsListJson)
             editor.apply()
         }
 
         projectName.setOnClickListener {
-            Toast.makeText(context, "Project opened", Toast.LENGTH_LONG).show()
+            ProjectActivity.project = project
+            val intent = Intent(context,ProjectActivity::class.java)
+            context.startActivity(intent)
         }
 
         return row
