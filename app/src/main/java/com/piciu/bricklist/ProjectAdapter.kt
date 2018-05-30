@@ -17,7 +17,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 class ProjectAdapter(private val context: Context) : BaseAdapter() {
 
     private var prefs: SharedPreferences = context.getSharedPreferences(Globals.PREFS_FILENAME, 0)
-    private val projectListJson: String = prefs.getString(Globals.PROJECTS_LIST,"[]")
+    private val projectListJson: String = prefs.getString(Globals.PROJECTS_LIST, "[]")
     private val mapper = jacksonObjectMapper()
     val projectList: ArrayList<Project> = mapper.readValue(projectListJson)
 

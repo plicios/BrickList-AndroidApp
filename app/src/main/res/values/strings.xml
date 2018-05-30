@@ -11,4 +11,8 @@
     <string name="countUp">+</string>
     <string name="brick_image">brick image</string>
     <string name="generate_xml">Generuj XML</string>
+    <string name="address_url">Adres url:</string>
+    <string name="default_address_url">http://fcds.cs.put.poznan.pl/MyWeb/BL/</string>
+    <string name="apply_changes">Zmień</string>
+    <string name="set_number">numer zestawu</string>
 </resources>

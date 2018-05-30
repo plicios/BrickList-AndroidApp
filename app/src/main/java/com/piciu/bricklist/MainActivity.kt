@@ -32,10 +32,16 @@ class MainActivity : AppCompatActivity() {
 
         projectList.adapter = projectAdapter
 
-        val intent = Intent(this, NewProjectActivity::class.java)
+
 
         newProject.setOnClickListener {
+            val intent = Intent(this, NewProjectActivity::class.java)
             startActivityForResult(intent, Globals.NEW_PROJECT_REQUEST_CODE)
+        }
+
+        settings.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
         }
     }
 }
