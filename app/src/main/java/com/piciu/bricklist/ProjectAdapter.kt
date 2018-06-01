@@ -2,7 +2,6 @@ package com.piciu.bricklist
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,26 +9,18 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-
 
 class ProjectAdapter(private val context: Context) : BaseAdapter() {
 
-    private var prefs: SharedPreferences = context.getSharedPreferences(Globals.PREFS_FILENAME, 0)
-    private val projectListJson: String = prefs.getString(Globals.PROJECTS_LIST, "[]")
-    private val mapper = jacksonObjectMapper()
-    val projectList: ArrayList<Project> = mapper.readValue(projectListJson)
+    private val databaseHelper: DataBaseHelper = DataBaseHelper(context)
+
+    val projectList: ArrayList<Project> = databaseHelper.getProjects()
 
     fun addNewProject(project: Project) {
         this.projectList.add(project)
         notifyDataSetChanged()
 
-        val projectsListJson = mapper.writeValueAsString(projectList)
-
-        val editor = prefs.edit()
-        editor.putString(Globals.PROJECTS_LIST, projectsListJson)
-        editor.apply()
+        databaseHelper.addProject(project)
     }
 
     override fun getCount(): Int {
@@ -63,21 +54,14 @@ class ProjectAdapter(private val context: Context) : BaseAdapter() {
             projectList.remove(project)
             notifyDataSetChanged()
 
-            val projectsListJson = mapper.writeValueAsString(projectList)
-
-            val editor = prefs.edit()
-            editor.putString(Globals.PROJECTS_LIST, projectsListJson)
-            editor.apply()
+            databaseHelper.deleteProject(project)
         }
 
         archiveProject.setOnClickListener {
             Toast.makeText(context, "Project archived", Toast.LENGTH_LONG).show()
 
-            val projectsListJson = mapper.writeValueAsString(projectList)
-
-            val editor = prefs.edit()
-            editor.putString(Globals.PROJECTS_LIST, projectsListJson)
-            editor.apply()
+            project.archived = true
+            databaseHelper.changeProjectValues(project)
         }
 
         projectName.setOnClickListener {

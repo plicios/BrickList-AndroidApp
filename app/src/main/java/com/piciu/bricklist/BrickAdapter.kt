@@ -1,6 +1,9 @@
 package com.piciu.bricklist
 
 import android.content.Context
+import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,9 +37,10 @@ class BrickAdapter(private var context: Context, private var brickList: MutableL
         }
 
         val brickName: TextView = row!!.findViewById(R.id.brickName)
-        val brickCount: TextView = row.findViewById(R.id.brickCount)
+        val brickCount: EditText = row.findViewById(R.id.brickCount)
         val brickCountNeeded: TextView = row.findViewById(R.id.brickCountNeeded)
         //val brickImage: ImageView = row.findViewById(R.id.brickImage)
+        val background: LinearLayout = row.findViewById(R.id.background)
         val brickCountDown: Button = row.findViewById(R.id.brickCountDown)
         val brickCountUp: Button = row.findViewById(R.id.brickCountUp)
 
@@ -44,19 +48,39 @@ class BrickAdapter(private var context: Context, private var brickList: MutableL
         val brick = brickList[i]
 
         brickName.text = brick.name
-        brickCount.text = brick.currentAmount.toString()
+        brickCount.setText(brick.currentAmount.toString())
         brickCountNeeded.text = brick.amountNeeded.toString()
         //brickImage.setImageDrawable()
 
         brickCountUp.setOnClickListener{
-            brick.currentAmount += 1
-            brickCount.text = brick.currentAmount.toString()
+            if(brick.currentAmount != brick.amountNeeded) {
+                brickCount.setText((brick.currentAmount + 1).toString())
+            }
         }
 
         brickCountDown.setOnClickListener{
-            brick.currentAmount -= 1
-            brickCount.text = brick.currentAmount.toString()
+            if(brick.currentAmount != 0) {
+                brickCount.setText((brick.currentAmount - 1).toString())
+            }
         }
+
+        brickCount.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(textAfterChange: Editable?) {
+                val newCount = textAfterChange.toString().toIntOrNull()
+                if(newCount != null && newCount <= brick.amountNeeded && newCount >= 0){
+                    brick.currentAmount = newCount
+                    background.setBackgroundColor(if (brick.currentAmount == brick.amountNeeded) Color.rgb(145,255,145) else Color.WHITE)
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+
 
         return row
     }

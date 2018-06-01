@@ -9,6 +9,15 @@ import kotlinx.android.synthetic.main.activity_project.*
 
 class ProjectActivity : AppCompatActivity() {
 
+    override fun onBackPressed() {
+        val dbHelper = DataBaseHelper(this)
+
+        if(project!= null) {
+            dbHelper.changeProjectValues(project!!)
+        }
+
+        super.onBackPressed()
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when(requestCode){
@@ -30,7 +39,7 @@ class ProjectActivity : AppCompatActivity() {
 
     }
 
-    var adapter: BrickAdapter? = null
+    private var adapter: BrickAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:id="@+id/background"
     android:orientation="horizontal">
 
     <ImageView
@@ -31,12 +32,14 @@
         android:text="@string/countDown"
         android:textStyle="bold" />
 
-    <TextView
+    <EditText
         android:id="@+id/brickCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+        android:inputType="number"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:id="@+id/brickCountSeparator"

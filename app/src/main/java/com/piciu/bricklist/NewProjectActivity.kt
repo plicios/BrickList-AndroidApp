@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_new_project.*
-import kotlinx.android.synthetic.main.activity_settings.*
+
 
 class NewProjectActivity : AppCompatActivity() {
 
@@ -20,11 +20,11 @@ class NewProjectActivity : AppCompatActivity() {
             if(!urlPath.last().equals('/', true)){
                 urlPath += '/'
             }
-            urlPath += "${url.text}.xml"
+            urlPath += "${newProjectUrl.text}.xml"
             val brickList: ArrayList<Brick> = ArrayList()
             var brick = Brick(1,"brick","red",10,5)
             brickList.add(brick)
-            val newProject = Project(0, newProjectName.text.toString(), brickList)
+            val newProject = Project(newProjectName.text.toString(), Integer.parseInt(newProjectUrl.text.toString()), brickList)
             project = newProject
 
             val returnIntent = Intent()

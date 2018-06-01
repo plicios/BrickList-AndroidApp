@@ -1,6 +1,5 @@
 package com.piciu.bricklist
 
-import android.widget.Toast
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import java.io.File
@@ -13,7 +12,7 @@ import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 
 
-class Project(val id: Long, val name: String, var brickList: ArrayList<Brick>){
+class Project(val name: String, val legoProjectId: Int, var brickList: ArrayList<Brick>, var archived: Boolean = false){
     fun writeXML(): String? {
         val docBuilder: DocumentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
         val doc: Document = docBuilder.newDocument()
@@ -57,7 +56,7 @@ class Project(val id: Long, val name: String, var brickList: ArrayList<Brick>){
                 file.createNewFile()
             }
             transformer.transform(DOMSource(doc), StreamResult(file))
-            return file.absolutePath;
+            return file.absolutePath
         }catch (e:Exception){
             return null
         }
