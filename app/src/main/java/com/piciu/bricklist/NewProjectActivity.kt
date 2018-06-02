@@ -2,7 +2,6 @@ package com.piciu.bricklist
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_new_project.*
@@ -15,16 +14,8 @@ class NewProjectActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_project)
 
         addNewProject.setOnClickListener {
-            val prefs: SharedPreferences = getSharedPreferences(Globals.PREFS_FILENAME, 0)
-            var urlPath = prefs.getString(Globals.ADDRESS_URL, "http://fcds.cs.put.poznan.pl/MyWeb/BL/")
-            if(!urlPath.last().equals('/', true)){
-                urlPath += '/'
-            }
-            urlPath += "${newProjectUrl.text}.xml"
-            val brickList: ArrayList<Brick> = ArrayList()
-            var brick = Brick(1,"brick","red",10,5)
-            brickList.add(brick)
-            val newProject = Project(newProjectName.text.toString(), Integer.parseInt(newProjectUrl.text.toString()), brickList)
+
+            val newProject = Project(newProjectName.text.toString(), newProjectUrl.text.toString().toInt())
             project = newProject
 
             val returnIntent = Intent()

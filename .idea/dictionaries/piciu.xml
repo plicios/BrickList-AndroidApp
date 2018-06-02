@@ -2,11 +2,13 @@
   <dictionary name="piciu">
     <words>
       <w>bricklist</w>
+      <w>będzie</w>
       <w>błąd</w>
       <w>folderze</w>
       <w>generowania</w>
       <w>itemid</w>
       <w>itemtype</w>
+      <w>klocków</w>
       <w>legoprojectid</w>
       <w>mogę</w>
       <w>moshi</w>
@@ -14,8 +16,13 @@
       <w>plik</w>
       <w>pliku</w>
       <w>pozwolenia</w>
+      <w>projekt</w>
+      <w>pusty</w>
       <w>qtyfilled</w>
+      <w>tabeli</w>
+      <w>udało</w>
       <w>utworzono</w>
+      <w>wstawić</w>
       <w>zapisać</w>
     </words>
   </dictionary>

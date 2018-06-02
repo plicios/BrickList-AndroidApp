@@ -1,5 +1,6 @@
 package com.piciu.bricklist
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.text.Editable
@@ -11,11 +12,6 @@ import android.widget.*
 
 
 class BrickAdapter(private var context: Context, private var brickList: MutableList<Brick>) : BaseAdapter() {
-
-    fun addNewBrick(brick: Brick) {
-        this.brickList.add(brick)
-        notifyDataSetChanged()
-    }
 
     override fun getCount(): Int {
         return brickList.size
@@ -29,17 +25,21 @@ class BrickAdapter(private var context: Context, private var brickList: MutableL
         return i.toLong()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
-        var row = view
-        if (row == null) {
-            val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            row = inflater.inflate(R.layout.brick_row_layout, viewGroup, false)
-        }
+//        var row = view
+//        if (row == null) {
+//            val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//            row = inflater.inflate(R.layout.brick_row_layout, viewGroup, false)
+//        }
+
+        val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        var row = inflater.inflate(R.layout.brick_row_layout, viewGroup, false)
 
         val brickName: TextView = row!!.findViewById(R.id.brickName)
         val brickCount: EditText = row.findViewById(R.id.brickCount)
         val brickCountNeeded: TextView = row.findViewById(R.id.brickCountNeeded)
-        //val brickImage: ImageView = row.findViewById(R.id.brickImage)
+        val brickImage: ImageView = row.findViewById(R.id.brickImage)
         val background: LinearLayout = row.findViewById(R.id.background)
         val brickCountDown: Button = row.findViewById(R.id.brickCountDown)
         val brickCountUp: Button = row.findViewById(R.id.brickCountUp)
@@ -47,29 +47,30 @@ class BrickAdapter(private var context: Context, private var brickList: MutableL
 
         val brick = brickList[i]
 
-        brickName.text = brick.name
-        brickCount.setText(brick.currentAmount.toString())
-        brickCountNeeded.text = brick.amountNeeded.toString()
-        //brickImage.setImageDrawable()
+        background.setBackgroundColor(if (brick.quantityInStore == brick.quantityInSet) Color.rgb(145,255,145) else Color.WHITE)
+        brickName.text = "${brick.itemId} ${brick.colorName}"
+        brickCount.setText(brick.quantityInStore.toString())
+        brickCountNeeded.text = brick.quantityInSet.toString()
+        brickImage.setImageBitmap(brick.image)
 
         brickCountUp.setOnClickListener{
-            if(brick.currentAmount != brick.amountNeeded) {
-                brickCount.setText((brick.currentAmount + 1).toString())
+            if(brick.quantityInStore != brick.quantityInSet) {
+                brickCount.setText((brick.quantityInStore + 1).toString())
             }
         }
 
         brickCountDown.setOnClickListener{
-            if(brick.currentAmount != 0) {
-                brickCount.setText((brick.currentAmount - 1).toString())
+            if(brick.quantityInStore != 0) {
+                brickCount.setText((brick.quantityInStore - 1).toString())
             }
         }
 
         brickCount.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(textAfterChange: Editable?) {
                 val newCount = textAfterChange.toString().toIntOrNull()
-                if(newCount != null && newCount <= brick.amountNeeded && newCount >= 0){
-                    brick.currentAmount = newCount
-                    background.setBackgroundColor(if (brick.currentAmount == brick.amountNeeded) Color.rgb(145,255,145) else Color.WHITE)
+                if(newCount != null && newCount <= brick.quantityInSet && newCount >= 0){
+                    brick.quantityInStore = newCount
+                    background.setBackgroundColor(if (brick.quantityInStore == brick.quantityInSet) Color.rgb(145,255,145) else Color.WHITE)
                 }
             }
 

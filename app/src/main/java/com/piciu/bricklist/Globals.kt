@@ -9,6 +9,7 @@ object Globals {
     const val PREFS_FILENAME = "com.piciu"
     const val PROJECTS_LIST = "projectsList"
     const val ADDRESS_URL = "addressUrl"
+    var LEGOSETURL = ""
 
     val XMLPath = Environment.getExternalStorageDirectory().absolutePath + "/" + "BrickList"
 

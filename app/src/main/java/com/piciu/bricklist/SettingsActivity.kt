@@ -21,6 +21,14 @@ class SettingsActivity : AppCompatActivity() {
             val editor = prefs.edit()
             editor.putString(Globals.ADDRESS_URL, url.text.toString())
             editor.apply()
+
+            var urlPath = url.text.toString()
+
+            if(!urlPath.last().equals('/', true)){
+                urlPath += '/'
+            }
+            Globals.LEGOSETURL = urlPath
+
             finish()
         }
     }

@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/brickName"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
@@ -36,7 +36,7 @@
         android:id="@+id/brickCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:inputType="number"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         tools:ignore="LabelFor" />
@@ -45,16 +45,13 @@
         android:id="@+id/brickCountSeparator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="2dp"
-        android:text="@string/countSeparator"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+        android:text="@string/countSeparator" />
 
     <TextView
         android:id="@+id/brickCountNeeded"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="5dp"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <Button
