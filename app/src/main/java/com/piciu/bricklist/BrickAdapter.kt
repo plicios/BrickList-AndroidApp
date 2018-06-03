@@ -13,6 +13,39 @@ import android.widget.*
 
 class BrickAdapter(private var context: Context, private var brickList: MutableList<Brick>) : BaseAdapter() {
 
+    private val allBrickList = brickList
+    private var colorFilter = 0
+    private var itemIdFilter: String? = null
+
+
+    private fun sortData(){
+        this.brickList.sortWith(compareBy({it.quantityInSet == it.quantityInStore}))
+        notifyDataSetChanged()
+    }
+
+    fun setColorFilter(colorId: Int){
+        colorFilter = colorId
+        filter()
+    }
+
+    private fun filter(){
+        var newBrickList = allBrickList
+        if(this.colorFilter != -1){
+            newBrickList = newBrickList.filter { b -> b.colorId == colorFilter } as MutableList<Brick>
+        }
+        if(this.itemIdFilter != null){
+            newBrickList = newBrickList.filter { b -> b.itemId == itemIdFilter } as MutableList<Brick>
+        }
+
+        this.brickList = newBrickList
+        sortData()
+    }
+
+    fun setItemIdFilter(itemID: String?){
+        itemIdFilter = itemID
+        filter()
+    }
+
     override fun getCount(): Int {
         return brickList.size
     }
@@ -71,6 +104,7 @@ class BrickAdapter(private var context: Context, private var brickList: MutableL
                 if(newCount != null && newCount <= brick.quantityInSet && newCount >= 0){
                     brick.quantityInStore = newCount
                     background.setBackgroundColor(if (brick.quantityInStore == brick.quantityInSet) Color.rgb(145,255,145) else Color.WHITE)
+                    sortData()
                 }
             }
 

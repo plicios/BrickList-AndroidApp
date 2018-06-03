@@ -11,7 +11,7 @@ class Brick{
         this.colorId = colorId
         this.extra = extra
         this.image = ImagesHelper.getImage(itemId, colorId)
-        this.colorName = if (colorId != 0) DataBaseHelper(CustomApplication.context!!).getColorName(colorId) else ""
+        this.colorName = if (colorId != 0) DataBaseHelper(CustomApplication.context!!).getColorName(colorId) else "No color"
     }
     val typeId: Int
     val itemId: String

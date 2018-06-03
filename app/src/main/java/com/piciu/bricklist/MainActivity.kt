@@ -6,6 +6,9 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import android.app.ProgressDialog
+import kotlin.concurrent.thread
+
 
 class MainActivity : AppCompatActivity() {
     
@@ -36,12 +39,6 @@ class MainActivity : AppCompatActivity() {
         }
         Globals.LEGOSETURL = urlPath
 
-        projectAdapter = ProjectAdapter(this)
-
-        projectList.adapter = projectAdapter
-
-
-
         newProject.setOnClickListener {
             val intent = Intent(this, NewProjectActivity::class.java)
             startActivityForResult(intent, Globals.NEW_PROJECT_REQUEST_CODE)
@@ -50,6 +47,20 @@ class MainActivity : AppCompatActivity() {
         settings.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
+        }
+
+        val nDialog = ProgressDialog(this)
+        nDialog.setMessage("Pobieranie projektów i obrazków")
+        nDialog.setTitle("Trwa wczytywanie")
+        nDialog.isIndeterminate = false
+        nDialog.setCancelable(false)
+        nDialog.show()
+        thread {
+            projectAdapter = ProjectAdapter(this)
+            runOnUiThread {
+                projectList.adapter = projectAdapter
+                nDialog.dismiss()
+            }
         }
     }
 }

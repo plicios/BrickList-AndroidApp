@@ -16,8 +16,8 @@
         <TextView
             android:id="@+id/projectName"
             android:layout_width="0dp"
-            android:layout_marginStart="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
@@ -26,6 +26,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/generate_xml" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/colorFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/itemIdFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <ListView

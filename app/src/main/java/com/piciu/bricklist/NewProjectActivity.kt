@@ -1,10 +1,12 @@
 package com.piciu.bricklist
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_new_project.*
+import kotlin.concurrent.thread
 
 
 class NewProjectActivity : AppCompatActivity() {
@@ -15,12 +17,24 @@ class NewProjectActivity : AppCompatActivity() {
 
         addNewProject.setOnClickListener {
 
-            val newProject = Project(newProjectName.text.toString(), newProjectUrl.text.toString().toInt())
-            project = newProject
+            val nDialog = ProgressDialog(this)
+            nDialog.setMessage("Pobieranie projektu oraz obrazków")
+            nDialog.setTitle("Trwa wczytywanie")
+            nDialog.isIndeterminate = false
+            nDialog.setCancelable(false)
+            nDialog.show()
+            thread {
 
-            val returnIntent = Intent()
-            setResult(Activity.RESULT_OK, returnIntent)
-            finish()
+                val newProject = Project(newProjectName.text.toString(), newProjectUrl.text.toString().toInt())
+                project = newProject
+
+                val returnIntent = Intent()
+                setResult(Activity.RESULT_OK, returnIntent)
+                runOnUiThread {
+                    nDialog.dismiss()
+                    finish()
+                }
+            }
         }
     }
 
