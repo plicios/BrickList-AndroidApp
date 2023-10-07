@@ -8,5 +8,7 @@ data class BrickResult(
     @SerializedName("element_id")
     val elementId: String,
     val part: PartResult,
-    val color: ColorResult
+    val color: ColorResult,
+    @SerializedName("is_spare")
+    val isSpare: Boolean
 )

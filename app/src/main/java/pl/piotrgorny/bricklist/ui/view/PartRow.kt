@@ -14,13 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.room.Update
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import pl.piotrgorny.bricklist.data.Part
 import pl.piotrgorny.bricklist.ui.theme.BrickListTheme
 
 @Composable
-fun PartRow(part: Part, modifier: Modifier = Modifier) {
+fun PartRow(part: Part, modifier: Modifier = Modifier, partUpdate: (part: Part) -> Unit) {
     Row(modifier.background(
         if(part.allFound) Color(122, 213, 167, 255) else Color.LightGray).padding(5.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -29,7 +30,7 @@ fun PartRow(part: Part, modifier: Modifier = Modifier) {
             modifier = Modifier.size(80.dp),
             imageModel = { part.imageUrl },
             imageOptions = ImageOptions(
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 alignment = Alignment.Center
             )
         )
@@ -39,7 +40,11 @@ fun PartRow(part: Part, modifier: Modifier = Modifier) {
             )
         }
         CheckBoxWithCounter(part.quantityFound, part.quantityNeeded) {
-
+            if(part.quantityFound < part.quantityNeeded){
+                partUpdate(part.copy(quantityFound = part.quantityFound + 1))
+            } else {
+                partUpdate(part.copy(quantityFound = 0))
+            }
         }
     }
 }
@@ -52,7 +57,13 @@ fun PartRowPreview() {
             Part(
                 "https://cdn.rebrickable.com/media/parts/ldraw/14/2342.png",
                 "test",
-                1)
-        )
+                "test part",
+                "black",
+                1,
+                0
+            )
+        ) {
+
+        }
     }
 }

@@ -6,10 +6,12 @@ import androidx.compose.runtime.Composable
 import pl.piotrgorny.bricklist.data.Part
 
 @Composable
-fun PartsList(items: List<Part>) {
+fun PartsList(items: List<Part>, partUpdate: (part: Part) -> Unit) {
     LazyColumn {
         items(items) {
-            PartRow(part = it)
+            PartRow(part = it) {part ->
+                partUpdate(part)
+            }
         }
     }
 }
