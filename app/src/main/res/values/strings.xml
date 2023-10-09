@@ -1,18 +1,3 @@
 <resources>
     <string name="app_name">BrickList</string>
-    <string name="project_name">_NAZWA_PROJEKTU</string>
-    <string name="new_project">Nowy projekt</string>
-    <string name="name">nazwa</string>
-    <string name="url">url</string>
-    <string name="add">Dodaj</string>
-    <string name="countDown">-</string>
-    <string name="startCount">0</string>
-    <string name="countSeparator">/</string>
-    <string name="countUp">+</string>
-    <string name="brick_image">brick image</string>
-    <string name="generate_xml">Generuj XML</string>
-    <string name="address_url">Adres url:</string>
-    <string name="default_address_url">http://fcds.cs.put.poznan.pl/MyWeb/BL/</string>
-    <string name="apply_changes">Zmień</string>
-    <string name="set_number">numer zestawu</string>
 </resources>
