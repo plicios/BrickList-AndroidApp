@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import pl.piotrgorny.bricklist.ui.screen.MissingPartsScreen
 import pl.piotrgorny.bricklist.ui.screen.SetScreen
 import pl.piotrgorny.bricklist.ui.screen.SetsScreen
 import pl.piotrgorny.bricklist.ui.theme.BrickListTheme
@@ -31,9 +32,14 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(navController = navController, startDestination = "sets") {
                         composable("sets") {
-                            SetsScreen { setId ->
-                                navController.navigate("set/$setId")
-                            }
+                            SetsScreen(
+                                navigateToSet = { setId ->
+                                    navController.navigate("set/$setId")
+                                },
+                                navigateToMissingParts = {
+                                    navController.navigate("missingParts")
+                                }
+                            )
                         }
                         composable("set/{setId}", listOf(
                             navArgument("setId") {
@@ -44,6 +50,9 @@ class MainActivity : ComponentActivity() {
                             setId?.let {
                                 SetScreen(setId)
                             }
+                        }
+                        composable("missingParts") {
+                            MissingPartsScreen()
                         }
                     }
 

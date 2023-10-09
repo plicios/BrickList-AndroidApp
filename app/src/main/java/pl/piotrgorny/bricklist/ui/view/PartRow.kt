@@ -38,6 +38,9 @@ fun PartRow(part: Part, modifier: Modifier = Modifier, partUpdate: (part: Part) 
             Text(
                 text = part.name,
             )
+            Text(
+                text = part.color,
+            )
         }
         CheckBoxWithCounter(part.quantityFound, part.quantityNeeded) {
             if(part.quantityFound < part.quantityNeeded){

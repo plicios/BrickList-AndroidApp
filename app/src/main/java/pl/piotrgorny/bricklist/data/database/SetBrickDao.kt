@@ -23,6 +23,6 @@ interface SetBrickDao {
     @Query("SELECT * FROM ${SetEntity.TABLE_NAME} WHERE ${SetEntity.COLUMN_ID} = :id")
     fun getSet(id: String) : Flow<SetWithBricks>
 
-    @Query("SELECT * FROM ${BrickEntity.TABLE_NAME}")
+    @Query("SELECT * FROM ${BrickEntity.TABLE_NAME} WHERE ${BrickEntity.COLUMN_QUANTITY_FOUND} < ${BrickEntity.COLUMN_QUANTITY_NEEDED}")
     fun getMissingBricks() : Flow<List<BrickEntity>>
 }

@@ -18,9 +18,7 @@ class SetsViewModel(private val setRepository: SetRepository) : ViewModel() {
 
     fun addSet() {
         viewModelScope.launch(Dispatchers.IO) {
-            setRepository.addSet("7140-1").collect {
 
-            }
         }
     }
 

@@ -18,7 +18,9 @@ data class BrickEntity(
     @ColumnInfo(name = COLUMN_COLOR)
     val color: String,
     val imageUrl: String,
+    @ColumnInfo(name = COLUMN_QUANTITY_NEEDED)
     val quantityNeeded: Int,
+    @ColumnInfo(name = COLUMN_QUANTITY_FOUND)
     val quantityFound: Int
 ) {
     companion object {
@@ -26,5 +28,7 @@ data class BrickEntity(
         const val COLUMN_ID = "id"
         const val COLUMN_SET_ID = "set_id"
         const val COLUMN_COLOR = "color"
+        const val COLUMN_QUANTITY_NEEDED = "quantityNeeded"
+        const val COLUMN_QUANTITY_FOUND = "quantityFound"
     }
 }

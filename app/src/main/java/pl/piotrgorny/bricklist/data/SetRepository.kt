@@ -2,7 +2,6 @@ package pl.piotrgorny.bricklist.data
 
 import RebrickableApi
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import androidx.room.withTransaction
 import kotlinx.coroutines.flow.Flow
@@ -46,11 +45,7 @@ class SetRepositoryRetrofitWithDatabase(applicationContext: Context) : SetReposi
         val set = getSet(setId)
         database.withTransaction {
             brickSetDao.insertSet(SetEntity(set.id, set.name, set.imageUrl))
-            set.parts.toBrickEntities(setId).sortedBy { it.id }.forEachIndexed { i, elem ->
-                Log.d("XXX", "$i: $elem")
-                brickSetDao.insertBricks(elem)
-            }
-//            brickSetDao.insertBricks(*set.parts.toBrickEntities(setId).toTypedArray())
+            brickSetDao.insertBricks(*set.parts.toBrickEntities(setId).toTypedArray())
         }
         emit(Result.Success)
     }
@@ -79,7 +74,7 @@ class SetRepositoryRetrofitWithDatabase(applicationContext: Context) : SetReposi
             setId,
             setResult.name,
             setResult.imageUrl,
-            getSetParts(setId)
+            getSetParts(setId) + getMinifigParts(setId)
         )
     }
 
@@ -91,6 +86,25 @@ class SetRepositoryRetrofitWithDatabase(applicationContext: Context) : SetReposi
             parts.addAll(getSetParts(setId, it))
         }
         return parts
+    }
+
+    private suspend fun getMinifigParts(setId: String): List<Part> {
+        val parts = mutableListOf<Part>()
+        val apiResult = rebrickableApi.getMinifigs(setId)
+        apiResult.results.forEach { minifigResult ->
+            val apiMinifigResult = rebrickableApi.getMinifigParts(minifigResult.id)
+            parts.addAll(apiMinifigResult.results.filter { !it.isSpare }.map { it.toPart() })
+        }
+        return parts.fold<Part, MutableList<Part>>(mutableListOf()) { newList, element ->
+            val part = newList.find { it.id == element.id && it.color == element.color}
+            if(part != null) {
+                val partIndex = newList.indexOf(part)
+                newList[partIndex] = part.copy(quantityNeeded = part.quantityNeeded + element.quantityNeeded)
+            } else {
+                newList.add(element)
+            }
+            newList
+        }.toList()
     }
 
     private fun String.extractPageFromUrl(): Int? = this.split("page=")[1].toIntOrNull()
